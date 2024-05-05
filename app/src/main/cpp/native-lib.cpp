@@ -1,11 +1,13 @@
 #include <jni.h>
 #include <string>
+#include "matrix.h"
 
 extern "C" JNIEXPORT jstring JNICALL
 Java_com_kinopoisk_matrixapp_MainActivity_stringFromJNI(
         JNIEnv* env,
         jobject /* this */) {
-    std::string hello = "Hello from C++";
+//    std::string hello = "Hello from C++";
+    std::string hello = matrix_library_name();
     return env->NewStringUTF(hello.c_str());
 }
 

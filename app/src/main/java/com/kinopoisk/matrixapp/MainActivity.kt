@@ -21,7 +21,8 @@ class MainActivity : ComponentActivity() {
             MatrixAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = "${add(2,2)}",
+//                        name = "${add(2,2)}",
+                        name = stringFromJNI(),
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -38,6 +39,7 @@ class MainActivity : ComponentActivity() {
         // Used to load the 'myfirstcppapp' library on application startup.
         init {
             System.loadLibrary("matrixapp")
+            System.loadLibrary("matrix")
         }
     }
 }
