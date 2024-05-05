@@ -21,4 +21,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "MatrixApp"
 include(":app")
- 
+include(":data")
+include(":ui")
+include(":core")
+include(":domain")
+include(":nativelib")
