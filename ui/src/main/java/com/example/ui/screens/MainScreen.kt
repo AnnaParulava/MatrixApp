@@ -14,12 +14,11 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun MatrixCalculatorScreen() {
+fun MatrixCalculatorScreen(navController: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -41,9 +40,10 @@ fun MatrixCalculatorScreen() {
             Column(
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
-                OperationButton(text = "+") {
+                OperationButton(text = "+"){
                     // Обработка нажатия кнопки сложения
                     // Ваш код обработчика
+                    navController()
                 }
                 Spacer(modifier = Modifier.height(16.dp))
                 OperationButton(text = "*") {
@@ -75,12 +75,6 @@ fun OperationButton(text: String, onClick: () -> Unit) {
             .size(150.dp),
         shape = RoundedCornerShape(8.dp)
     ) {
-        Text(text = text, fontSize = 18.sp)
+        Text(text = text, fontSize = 100.sp)
     }
-}
-
-@Preview
-@Composable
-fun PreviewMatrixCalculatorScreen() {
-    MatrixCalculatorScreen()
 }

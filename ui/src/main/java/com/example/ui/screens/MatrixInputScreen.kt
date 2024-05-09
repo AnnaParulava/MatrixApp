@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
@@ -19,32 +20,36 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 @Composable
-fun MatrixInputScreen() {
-    Column(
+fun MatrixInputScreen(navController: NavController) {
+    LazyColumn(
         modifier = Modifier
             .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-        MatrixInput(matrixSize = 4)
-        MatrixInput(matrixSize = 4)
-        ReadOnlyMatrix(matrixSize = 4)
+        item {
+            MatrixInput(matrixSize = 4)
+        }
+        item {
+            MatrixInput(matrixSize = 4)
+        }
+        item {
+            ReadOnlyMatrix(matrixSize = 4)
+        }
     }
 }
 
 @Composable
-fun MatrixInput(matrixSize: Int){
+fun MatrixInput(matrixSize: Int) {
     val matrix by remember { mutableStateOf(Array(matrixSize) { Array(matrixSize) { "" } }) }
 
     Column(
@@ -112,7 +117,11 @@ fun ReadOnlyMatrix(matrixSize: Int) {
                                 color = Color.Transparent,
                                 shape = RoundedCornerShape(4.dp),
                             )
-                            .border(width = 1.dp, color = Color.Gray, shape = RoundedCornerShape(4.dp))
+                            .border(
+                                width = 1.dp,
+                                color = Color.Gray,
+                                shape = RoundedCornerShape(4.dp)
+                            )
                     ) {
                         Text(
                             fontSize = 16.sp,
@@ -126,13 +135,4 @@ fun ReadOnlyMatrix(matrixSize: Int) {
             }
         }
     }
-}
-
-
-
-
-@Preview
-@Composable
-fun MatrixInputScreenPreview() {
-    MatrixInputScreen()
 }

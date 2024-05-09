@@ -26,8 +26,17 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            ndk {
+                abiFilters.add("arm64-v8a")
+            }
+        }
+        debug {
+            ndk {
+                abiFilters.add("arm64-v8a")
+            }
         }
     }
+
     externalNativeBuild {
         cmake {
             path("src/main/cpp/CMakeLists.txt")
