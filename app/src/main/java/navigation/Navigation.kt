@@ -26,7 +26,7 @@ fun Navigation(navController: NavHostController) {
                 )
             })
         }
-        composable(Routes.MatrixInputScreen.route) { MatrixInputScreen(navController) }
+        composable(Routes.MatrixInputScreen.route) { MatrixInputScreen() }
     }
 }
 
