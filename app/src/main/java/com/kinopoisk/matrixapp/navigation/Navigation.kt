@@ -1,4 +1,4 @@
-package navigation
+package com.kinopoisk.matrixapp.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController

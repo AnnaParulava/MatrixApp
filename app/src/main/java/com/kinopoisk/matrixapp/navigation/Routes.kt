@@ -1,4 +1,4 @@
-package navigation
+package com.kinopoisk.matrixapp.navigation
 
 sealed class Routes(val route: String) {
 

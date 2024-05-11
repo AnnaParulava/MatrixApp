@@ -1,10 +1,10 @@
 package com.kinopoisk.matrixapp
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,15 +30,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.example.ui.theme.MatrixAppTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import navigation.Navigation
+import com.kinopoisk.matrixapp.navigation.Navigation
+import com.kinopoisk.matrixapp.viewmodel.Factory
+import com.kinopoisk.matrixapp.viewmodel.MatrixViewModel
+import javax.inject.Inject
+import javax.inject.Provider
 
 class MainActivity : ComponentActivity() {
+    @Inject
+    lateinit var viewModeProvider: Provider<Factory>
+    private val viewModel: MatrixViewModel by viewModels { viewModeProvider.get() }
     override fun onCreate(savedInstanceState: Bundle?) {
+        appComponent.inject(this)
         super.onCreate(savedInstanceState)
         window.statusBarColor = Color.Black.toArgb()
         enableEdgeToEdge()
@@ -55,7 +62,6 @@ class MainActivity : ComponentActivity() {
                             16.dp
                         ),
                     ) {
-                       main()
                        val navController = rememberNavController()
                        Navigation(navController = navController)
                     }
@@ -70,39 +76,6 @@ class MainActivity : ComponentActivity() {
             systemUiController.setSystemBarsColor(color)
         }
     }
-
-    companion object {
-        init {
-            System.loadLibrary("matrixapp")
-            System.loadLibrary("matrix")
-        }
-    }
-
-    private external fun addMatricesJNI(matrix1: Array<DoubleArray>, matrix2: Array<DoubleArray>): Array<DoubleArray>
-    private external fun subtractMatricesJNI(matrix1: Array<DoubleArray>, matrix2: Array<DoubleArray>): Array<DoubleArray>
-    private external fun multiplyMatricesJNI(matrix1: Array<DoubleArray>, matrix2: Array<DoubleArray>): Array<DoubleArray>
-
-    fun main() {
-        val matrix1 = arrayOf(doubleArrayOf(1.1, 2.0), doubleArrayOf(3.0, 4.0))
-        val matrix2 = arrayOf(doubleArrayOf(5.0, 6.0), doubleArrayOf(7.0, 8.0))
-        val resultMatrix = addMatricesJNI(matrix1, matrix2)
-        extracted("add", resultMatrix)
-        extracted("sub", subtractMatricesJNI(matrix1, matrix2))
-        extracted("multi", multiplyMatricesJNI(matrix1, matrix2))
-    }
-
-    private fun extracted(log: String, resultMatrix: Array<DoubleArray>) {
-        var res = ""
-
-        for (row in resultMatrix) {
-            for (element in row) {
-                res += "$element "
-            }
-            println()
-        }
-        Log.d("AAA", "$log $res")
-    }
-
 }
 
 

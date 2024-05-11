@@ -21,6 +21,14 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            ndk {
+                abiFilters.add("arm64-v8a")
+            }
+        }
+        debug {
+            ndk {
+                abiFilters.add("arm64-v8a")
+            }
         }
     }
     compileOptions {
@@ -37,4 +45,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
+
+    implementation(project(":core"))
+    implementation(project(":domain"))
 }
