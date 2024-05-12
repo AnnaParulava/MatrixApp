@@ -13,12 +13,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import utlis.Operation
 
 @Composable
-fun MatrixCalculatorScreen(navController: () -> Unit) {
+fun MatrixCalculatorScreen(onOperationSelected: (Operation) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -28,41 +30,49 @@ fun MatrixCalculatorScreen(navController: () -> Unit) {
         Text(
             text = "Матричный калькулятор",
             fontSize = 24.sp,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = 16.dp).align(Alignment.CenterHorizontally)
         )
 
-        // Кнопки для операций
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth()
         ) {
-            // Ряд с кнопками сложения и вычитания
-            Column(
-                verticalArrangement = Arrangement.SpaceBetween
-            ) {
-                OperationButton(text = "+"){
-                    // Обработка нажатия кнопки сложения
-                    // Ваш код обработчика
-                    navController()
-                }
-                Spacer(modifier = Modifier.height(16.dp))
-                OperationButton(text = "*") {
-                    // Обработка нажатия кнопки вычитания
-                    // Ваш код обработчика
-                }
+            OperationButton(text = "+") {
+                onOperationSelected(Operation.Add)
             }
-
-            Column(
-                verticalArrangement = Arrangement.SpaceBetween
-            ) {
-
-                // Кнопка умножения
-                OperationButton(text = "-") {
-                    // Обработка нажатия кнопки умножения
-                    // Ваш код обработчика
-                }
+            Spacer(modifier = Modifier.height(16.dp))
+            OperationButton(text = "*") {
+                onOperationSelected(Operation.Multiply)
             }
         }
+
+
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            OperationButton(text = "-") {
+                onOperationSelected(Operation.Subtract)
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            OperationButton(text = "T") {
+                onOperationSelected(Operation.Transpose)
+            }
+        }
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+
+            OperationButton(text = "R") {
+                onOperationSelected(Operation.Rank)
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            OperationButton(text = "D") {
+                onOperationSelected(Operation.Determinant)
+            }
+        }
+
     }
 }
 

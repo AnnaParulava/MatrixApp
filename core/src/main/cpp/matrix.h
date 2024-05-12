@@ -18,7 +18,10 @@ public:
     Matrix(const std::vector<std::vector<double>>& initData);
     Matrix add(const Matrix& other) const;
     Matrix subtract(const Matrix& other) const;
-    Matrix multiply(const Matrix& other) const; 
+    Matrix multiply(const Matrix& other) const;
+    Matrix transpose() const;
+    int rank() const;
+    double determinant() const;
     friend std::ostream& operator<<(std::ostream& os, const Matrix& matrix);
 };
 

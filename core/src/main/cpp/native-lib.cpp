@@ -41,7 +41,7 @@ jobjectArray createResultArray(JNIEnv* env, const Matrix& sum) {
 
 extern "C" {
 
-JNIEXPORT jobjectArray JNICALL Java_com_kinopoisk_matrixapp_MainActivity_addMatricesJNI(
+JNIEXPORT jobjectArray JNICALL Java_MatrixRepositoryImpl_addMatricesJNI(
         JNIEnv* env,
         jobject /* this */,
         jobjectArray matrix1,
@@ -64,7 +64,7 @@ JNIEXPORT jobjectArray JNICALL Java_com_kinopoisk_matrixapp_MainActivity_addMatr
     return resultArray;
 }
 
-JNIEXPORT jobjectArray JNICALL Java_com_kinopoisk_matrixapp_MainActivity_subtractMatricesJNI(
+JNIEXPORT jobjectArray JNICALL Java_MatrixRepositoryImpl_subtractMatricesJNI(
         JNIEnv* env,
         jobject /* this */,
         jobjectArray matrix1,
@@ -87,7 +87,7 @@ JNIEXPORT jobjectArray JNICALL Java_com_kinopoisk_matrixapp_MainActivity_subtrac
     return resultArray;
 }
 
-JNIEXPORT jobjectArray JNICALL Java_com_kinopoisk_matrixapp_MainActivity_multiplyMatricesJNI(
+JNIEXPORT jobjectArray JNICALL Java_MatrixRepositoryImpl_multiplyMatricesJNI(
         JNIEnv* env,
         jobject /* this */,
         jobjectArray matrix1,
@@ -110,5 +110,68 @@ JNIEXPORT jobjectArray JNICALL Java_com_kinopoisk_matrixapp_MainActivity_multipl
     return resultArray;
 }
 
+
+JNIEXPORT jobjectArray JNICALL Java_MatrixRepositoryImpl_transposeMatrixJNI(
+        JNIEnv* env,
+        jobject /* this */,
+        jobjectArray matrix) {
+
+    jsize rows, cols;
+    std::vector<std::vector<double>> init = createMatrix(env, matrix, rows, cols);
+
+    if (init.empty()) {
+        return nullptr; // Ошибка при создании матрицы
+    }
+
+    Matrix m(init);
+    Matrix transposed = m.transpose(); // Транспонирование матрицы
+
+    jobjectArray resultArray = createResultArray(env, transposed);
+
+    return resultArray;
+}
+
+JNIEXPORT jint JNICALL Java_MatrixRepositoryImpl_rankMatrixJNI(
+        JNIEnv* env,
+        jobject /* this */,
+        jobjectArray matrix) {
+
+    jsize rows, cols;
+    std::vector<std::vector<double>> init = createMatrix(env, matrix, rows, cols);
+
+    if (init.empty()) {
+        return -1; // Ошибка при создании матрицы
+    }
+
+    Matrix m(init);
+    int rank = m.rank();
+
+    return rank;
+}
+
+JNIEXPORT jdouble JNICALL Java_MatrixRepositoryImpl_determinantMatrixJNI(
+        JNIEnv* env,
+        jobject /* this */,
+        jobjectArray matrix) {
+
+    jsize rows, cols;
+    std::vector<std::vector<double>> init = createMatrix(env, matrix, rows, cols);
+
+    if (init.empty() || rows != cols) {
+        return -1; // Ошибка при создании матрицы или матрица не квадратная
+    }
+
+    Matrix m(init);
+    double determinant = m.determinant();
+
+    return determinant;
+}
+
+JNIEXPORT jstring JNICALL Java_com_kinopoisk_matrixapp_MainActivity_stringFromJNI(
+        JNIEnv* env,
+        jobject /* this */) {
+    std::string result = "C++";
+    return env->NewStringUTF(result.c_str());
+}
 
 }

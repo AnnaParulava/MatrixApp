@@ -8,25 +8,24 @@ import androidx.navigation.compose.composable
 import com.example.ui.screens.MatrixCalculatorScreen
 import com.example.ui.screens.MatrixInputScreen
 import com.example.ui.screens.MatrixSizeScreen
+import com.example.ui.viewmodel.MatrixViewModel
 
 @Composable
-fun Navigation(navController: NavHostController) {
+fun Navigation(navController: NavHostController,  viewModel: MatrixViewModel) {
     NavHost(navController = navController, startDestination = Routes.MatrixCalculatorScreen.route) {
         composable(Routes.MatrixCalculatorScreen.route) {
-            MatrixCalculatorScreen {
-                navigateToMatrixSize(
-                    navController
-                )
+            MatrixCalculatorScreen { operation ->
+                viewModel.selectOperation(operation)
+                navigateToMatrixSize(navController)
             }
         }
         composable(Routes.MatrixSizeScreen.route) {
-            MatrixSizeScreen({
-                navigateToMatrixInput(
-                    navController
-                )
-            })
+            MatrixSizeScreen { rows, cols ->
+                viewModel.selectMatrixParams(rows, cols)
+                navigateToMatrixInput(navController)
+            }
         }
-        composable(Routes.MatrixInputScreen.route) { MatrixInputScreen() }
+        composable(Routes.MatrixInputScreen.route) { MatrixInputScreen(viewModel) }
     }
 }
 

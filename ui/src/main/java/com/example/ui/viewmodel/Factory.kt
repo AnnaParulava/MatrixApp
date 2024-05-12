@@ -1,4 +1,4 @@
-package com.kinopoisk.matrixapp.viewmodel
+package com.example.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

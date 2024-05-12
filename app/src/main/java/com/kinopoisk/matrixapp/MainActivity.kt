@@ -1,6 +1,7 @@
 package com.kinopoisk.matrixapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -35,8 +36,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.ui.theme.MatrixAppTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kinopoisk.matrixapp.navigation.Navigation
-import com.kinopoisk.matrixapp.viewmodel.Factory
-import com.kinopoisk.matrixapp.viewmodel.MatrixViewModel
+import com.example.ui.viewmodel.Factory
+import com.example.ui.viewmodel.MatrixViewModel
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -54,21 +55,22 @@ class MainActivity : ComponentActivity() {
                 SetStatusBarColor(color = MaterialTheme.colorScheme.primary)
                 Scaffold(
                     containerColor = Color.White
-                ){ innerPadding ->
-                   Column(
+                ) { innerPadding ->
+                    Column(
                         modifier = Modifier
                             .padding(innerPadding),
                         verticalArrangement = Arrangement.spacedBy(
                             16.dp
                         ),
                     ) {
-                       val navController = rememberNavController()
-                       Navigation(navController = navController)
+                        val navController = rememberNavController()
+                        Navigation(navController = navController, viewModel = viewModel)
                     }
                 }
             }
         }
     }
+
     @Composable
     fun SetStatusBarColor(color: Color) {
         val systemUiController = rememberSystemUiController()
@@ -77,7 +79,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
 
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun MatrixSizeScreen(nav: () -> Unit = {}, onMatrixSizeSelected: (Int) -> Unit = {}) {
+fun MatrixSizeScreen(nav: () -> Unit = {}, onMatrixParamsSelected: (rows: Int, cols: Int) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -21,9 +21,12 @@ fun MatrixSizeScreen(nav: () -> Unit = {}, onMatrixSizeSelected: (Int) -> Unit =
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        MatrixSizeButton(text = "2x2") { nav() }
-        MatrixSizeButton(text = "3x3") { onMatrixSizeSelected(3) }
-        MatrixSizeButton(text = "4x4") { onMatrixSizeSelected(4) }
+        MatrixSizeButton(text = "2x2") {
+            onMatrixParamsSelected(2,2)
+            nav()
+        }
+        MatrixSizeButton(text = "3x3") {  onMatrixParamsSelected(3,3) }
+        MatrixSizeButton(text = "4x4") { onMatrixParamsSelected(4,4) }
     }
 }
 
