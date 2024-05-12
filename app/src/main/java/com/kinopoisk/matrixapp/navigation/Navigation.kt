@@ -11,7 +11,7 @@ import com.example.ui.screens.MatrixSizeScreen
 import com.example.ui.viewmodel.MatrixViewModel
 
 @Composable
-fun Navigation(navController: NavHostController,  viewModel: MatrixViewModel) {
+fun Navigation(navController: NavHostController, viewModel: MatrixViewModel) {
     NavHost(navController = navController, startDestination = Routes.MatrixCalculatorScreen.route) {
         composable(Routes.MatrixCalculatorScreen.route) {
             MatrixCalculatorScreen { operation ->
@@ -20,18 +20,33 @@ fun Navigation(navController: NavHostController,  viewModel: MatrixViewModel) {
             }
         }
         composable(Routes.MatrixSizeScreen.route) {
-            MatrixSizeScreen { rows, cols ->
+            MatrixSizeScreen(nav = {
+                navigatePopUp(
+                    navController,
+                    Routes.MatrixCalculatorScreen.route
+                )
+            }) { rows, cols ->
                 viewModel.selectMatrixParams(rows, cols)
                 navigateToMatrixInput(navController)
             }
         }
-        composable(Routes.MatrixInputScreen.route) { MatrixInputScreen(viewModel) }
+        composable(Routes.MatrixInputScreen.route) {
+            MatrixInputScreen(
+                nav = {
+                    navigatePopUp(
+                        navController,
+                        Routes.MatrixSizeScreen.route
+                    )
+                },
+                viewModel
+            )
+        }
     }
 }
 
-fun navigateToMainScreen(navController: NavController, route: String) {
+fun navigatePopUp(navController: NavController, route: String) {
     navController.navigate(route) {
-        popUpTo(Routes.MatrixCalculatorScreen.route)
+        popUpTo(route)
     }
 }
 

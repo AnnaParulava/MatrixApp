@@ -11,68 +11,89 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import utlis.Operation
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MatrixCalculatorScreen(onOperationSelected: (Operation) -> Unit) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Top
-    ) {
-        Text(
-            text = "Матричный калькулятор",
-            fontSize = 24.sp,
-            modifier = Modifier.padding(bottom = 16.dp).align(Alignment.CenterHorizontally)
-        )
-
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            OperationButton(text = "+") {
-                onOperationSelected(Operation.Add)
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-            OperationButton(text = "*") {
-                onOperationSelected(Operation.Multiply)
-            }
+    Scaffold(
+        modifier = Modifier.padding(16.dp),
+        containerColor = Color.White,
+        topBar = {
+            TopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.White,
+                    titleContentColor = MaterialTheme.colorScheme.primaryContainer,
+                ),
+                title = {
+                    Text(
+                        text = "Матричный калькулятор",
+                        fontSize = 24.sp,
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
+                }
+            )
         }
-
-
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding),
+            verticalArrangement = Arrangement.Top
         ) {
-            OperationButton(text = "-") {
-                onOperationSelected(Operation.Subtract)
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                OperationButton(text = "+") {
+                    onOperationSelected(Operation.Add)
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                OperationButton(text = "*") {
+                    onOperationSelected(Operation.Multiply)
+                }
             }
-            Spacer(modifier = Modifier.height(16.dp))
-            OperationButton(text = "T") {
-                onOperationSelected(Operation.Transpose)
-            }
-        }
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()
-        ) {
 
-            OperationButton(text = "R") {
-                onOperationSelected(Operation.Rank)
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-            OperationButton(text = "D") {
-                onOperationSelected(Operation.Determinant)
-            }
-        }
 
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                OperationButton(text = "-") {
+                    onOperationSelected(Operation.Subtract)
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                OperationButton(text = "T") {
+                    onOperationSelected(Operation.Transpose)
+                }
+            }
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+
+                OperationButton(text = "R") {
+                    onOperationSelected(Operation.Rank)
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                OperationButton(text = "D") {
+                    onOperationSelected(Operation.Determinant)
+                }
+            }
+
+        }
     }
 }
 

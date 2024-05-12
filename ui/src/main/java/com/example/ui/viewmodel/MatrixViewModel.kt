@@ -73,6 +73,17 @@ class MatrixViewModel @Inject constructor(
             else -> throw Exception("no operation selected")
         }
     }
+    fun operationTitle(): String {
+     return when (getSelectedOperation()) {
+            Operation.Add -> "Сложение"
+            Operation.Multiply -> "Умножение"
+            Operation.Subtract -> "Вычитание"
+            Operation.Transpose -> "Транспонирование"
+            Operation.Rank -> "Ранг матрицы"
+            Operation.Determinant -> "Определитель матрицы"
+            else -> String()
+        }
+    }
 
     override fun handleMatrixInput(matrix: Matrix) {
         _screenState.value = _screenState.value.copy(matrixInput = matrix)
